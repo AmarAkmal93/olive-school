@@ -11,11 +11,11 @@ class User(db.Model):
     password = db.Column(db.String(100))
     date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
     is_deleted = db.Column(db.Boolean, default=1)
-    parent_detail = db.relationship("Parent", backref="user", cascade="all, delete-orphan")
 
-    def __init__(self, name, role, password):
+    def __init__(self, name,email, role, password):
         self.id = uuid.uuid4().hex
         self.name = name
+        self.email = email
         self.role = role
         self.password = password
 
@@ -46,7 +46,7 @@ class Parent(db.Model):
     ic_no = db.Column(db.String(100))
     password = db.Column(db.String(100))
     date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
-    student_id = db.Column(db.ForeignKey('students.id', ondelete="CASCADE", onupdate="CASCADE"))
+    student_id = db.Column(db.ForeignKey('student.id', ondelete="CASCADE", onupdate="CASCADE"))
     is_deleted = db.Column(db.Boolean, default=1)
 
     def __init__(self, name):
@@ -58,7 +58,7 @@ class Payment(db.Model):
     id = db.Column(db.String(32), primary_key=True)
     receipt_no = db.Column(db.String(32))
     desc = db.Column(db.TEXT)
-    payment_detail = db.relationship("PaymentHistory", backref="student", cascade="all, delete-orphan")
+    payment_detail = db.relationship("PaymentDetail", backref="payment", cascade="all, delete-orphan")
     date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
     is_pay = db.Column(db.Boolean, default=1)
     is_deleted = db.Column(db.Boolean, default=1)
@@ -90,7 +90,6 @@ class Academy(db.Model):
     sem = db.Column(db.String(32))
     desc = db.Column(db.TEXT)
     date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
-    payment_detail = db.relationship("Academy", backref="academy", cascade="all, delete-orphan")
     student_id = db.Column(db.ForeignKey('student.id', ondelete="CASCADE", onupdate="CASCADE"))
     is_deleted = db.Column(db.Boolean, default=1)
 

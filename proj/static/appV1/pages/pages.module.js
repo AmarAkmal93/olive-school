@@ -3,14 +3,14 @@
 
     angular.module('BlurAdmin.pages', [
         'ui.router',
-        'BlurAdmin.pages.myProfile',
-        'BlurAdmin.pages.report',
-        // 'BlurAdmin.pages.profile',
+        'BlurAdmin.pages.account',
+        'BlurAdmin.pages.student',
+        'BlurAdmin.pages.academy',
     ]).config(routeConfig);
 
 
     /** @ngInject */
     function routeConfig($urlRouterProvider) {
-        $urlRouterProvider.otherwise('/report/list');
+        // $urlRouterProvider.otherwise('/report/list');
     }
 })();

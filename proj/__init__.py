@@ -25,12 +25,16 @@ from proj import model
 
 db.create_all()
 # ---
-from proj.views.report import bp_report
+from proj.views.login import bp_login
 
-app.register_blueprint(bp_report, url_prefix='/report')
+app.register_blueprint(bp_login, url_prefix='/login')
+
+
+from proj.views.main import bp_main
+
+app.register_blueprint(bp_main, url_prefix='/main')
 
 from proj.views.Insertdata import bp_insertdata
 
-app.register_blueprint(bp_insertdata, url_prefix='/insert_data')
-
+app.register_blueprint(bp_insertdata, url_prefix='/insert')
 # ---

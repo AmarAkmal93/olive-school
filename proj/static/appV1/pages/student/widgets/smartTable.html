@@ -1,0 +1,182 @@
+<style>
+
+
+    #input_gopage::-webkit-inner-spin-button,
+    #input_gopage::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    .elipsis {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 0;
+    }
+
+</style>
+
+<div>
+    <div class="table table-striped" style="padding-top: 10px;padding-left: 30px;">
+        <button style="width: 100px" type="button" class="btn btn-danger ion-trash-b" data-toggle="modal"
+                ng-click="delete()">
+            &nbsp;&nbsp;&nbsp;&nbsp;Delete
+        </button>
+        <button style="width: 100px" type="button" class="btn btn-info ion-refresh" ng-click="clear()">
+            &nbsp;&nbsp;&nbsp;Refresh
+        </button>
+    </div>
+    <!--    <p style="float: right">Page {{pagenum}} of {{count_result}} results</p>-->
+    <p style="float: right">{{count_result}} results</p>
+    <table class="table " st-table="smartTableCopy" st-safe-src="smartTableData">
+        <thead>
+        <tr class="sortable ">
+            <th style="width: 3%;"></th>
+            <th st-sort="date_report" style="width: 27%;">Student Name</th>
+            <th st-sort="no_rujukan" style="width: 15%;">IC Student</th>
+            <th st-sort="category" style="width: 30%;">Year</th>
+            <th st-sort="status" style="width: 15%;">Intake</th>
+            <th style="width: 10%;text-align: center">Action</th>
+
+
+        </tr>
+        <tr>
+            <th class="check-td">
+                <div class="mail-checkbox">
+                    <label class="checkbox-inline custom-checkbox nowrap">
+                        <input type="checkbox" ng-click="toggleAll()" ng-model="formData.isAllSelected">
+                        <span></span>
+                    </label>
+                </div>
+            </th>
+
+            <th>
+                <input ng-enter="getfilter()" ng-model="student_name" placeholder="Search Name"
+                       class="input-sm form-control search-input"
+                       type="search"/>
+            </th>
+            <th>
+                <input ng-enter="getfilter()" ng-model="ic_student" placeholder="Search IC"
+                       class="input-sm form-control search-input"
+                       type="search"/>
+            </th>
+            <th>
+                <input ng-enter="getfilter()" ng-model="year" placeholder="Search Year"
+                       class="input-sm form-control search-input"
+                       type="search"/>
+            </th>
+            <th>
+                <ui-select ng-model="select_intake.selected"
+                           class="btn-group bootstrap-select form-control" append-to-body="true"
+                           search-enabled="false" ng-change="getfilter()">
+                    <ui-select-match placeholder="Please Choose">
+                        <span> {{$select.selected}}</span>
+                    </ui-select-match>
+                    <ui-select-choices
+                            repeat="x in select_intake.options | filter: $select.search"
+                            ng-hide="!$select.open">
+                        <span ng-bind-html="x"></span>
+                    </ui-select-choices>
+                </ui-select>
+            </th>
+
+            <th style="text-align: center ;padding-right: 30px;">
+
+                <button uib-tooltip="Clear filter " class="btn btn-sm btn-default" style="padding-top: inherit ;"
+                        ng-click="clear()">
+                    <i class="fa fa-eraser"></i>
+                </button>
+
+            </th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-hide="smartTableCopy.length">
+            <td colspan="6">
+                No Data Available
+            </td>
+        </tr>
+        <tr id="tr{{item['id']}}" ng-repeat="item in smartTableCopy">
+            <td>
+                <div id="celery_process{{item.id}}" class="mail-checkbox">
+                    <label class="checkbox-inline custom-checkbox nowrap">
+                        <input type="checkbox" id="{{item.id}}" ng-model="selectedList[item.id]">
+                        <span></span>
+                    </label>
+                </div>
+            </td>
+            <td class="elipsis" ng-click="view(item.id,item.status)" style="cursor: pointer;">{{item.date_report}}</td>
+            <td class="elipsis" ng-click="view(item.id,item.status)" style="cursor: pointer;">{{item.no_rujukan}}</td>
+            <td class="elipsis" ng-click="view(item.id,item.status)" style="cursor: pointer;">{{item.category}}</td>
+
+            <td style="text-align: center;">
+
+                <!--                <img class="kameleon-icon with-round-bg {{item.color}}"><img-->
+                <img uib-tooltip="{{item.status}}" style="width:35px " ng-src="{{::( item.status | kameleonImg )}}">
+                <!--                <a>{{item.status}}</a>-->
+
+            </td>
+            <td id="td{{item['id']}}" style=" padding-top: 3px;text-align: center">
+                <button id="forward{{item['id']}}" class="btn btn-icon btn-default"
+                        ng-hide="item.status != 'Failed'"
+                        ng-click="resend_report(item.id)">
+                    <i class="ion-android-share"></i></button>
+
+                <button id="loading_return{{item['id']}}" ng-show="item.status == 'Failed'"
+                        class=" btn btn-icon btn-default">
+                    <i class="fa fa-spinner fa-spin"></i>
+                </button>
+
+                <!--                <button  id="loading_celery{{item['id']}}"-->
+                <!--                        class=" btn btn-icon btn-default">-->
+                <!--                    <i class="fa fa-spinner fa-spin"></i>-->
+                <!--                </button>-->
+
+
+            </td>
+            <!--            <td id="loading{{item['id']}}" style=" padding-top: 3px;">-->
+            <!--                <button ng-show="item.status == 'Failed'"-->
+            <!--                        class=" btn btn-icon btn-default">-->
+            <!--                    <i class="fa fa-spinner fa-spin"></i>-->
+            <!--                </button>-->
+
+
+            <!--            </td>-->
+
+        </tr>
+        </tbody>
+        <tfoot>
+        <!--        <tr>-->
+        <!--            <td colspan="6" class="text-center">-->
+        <!--&lt;!&ndash;                <div st-pagination="" st-items-by-page="smartTablePageSize" st-displayed-pages="5"></div>&ndash;&gt;-->
+        <!--            </td>-->
+        <!--        </tr>-->
+        <tr>
+            <td colspan="6" class="text-center" ng-show="totalpagenum >= 2">
+
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <button class="btn btn-icon btn-default" ng-disabled="pagenum < 2" style="margin-left:10px"
+                            ng-click="prev()"><i class="ion-arrow-left-a"></i></button>
+                    <button ng-repeat="x in paging" class="btn"
+                            ng-class="pagenum == x ?'':'btn-default'" ng-click="pressnum(x)">
+                        {{x}}
+                    </button>
+                    <button class="btn btn-icon btn-default" ng-disabled="pagenum >= totalpagenum"
+                            ng-click="next()">
+                        <i class="ion-arrow-right-a"></i></button>
+                </div>
+
+                <span class="number">
+                            <input ng-disabled="goto.page == 0" class="form-control" type="number" ng-model="goto.page"
+                                   ng-enter="gopage()"
+                                   style="width: 33px;display: initial;text-align: center;padding: unset;border: 1px solid #dcdcdc;"
+                                   id="input_gopage"
+                                   onkeypress="this.style.width = ((this.value.length + 4) * 8) + 'px';"/> / {{totalpagenum}}</span>
+                <button ng-disabled="goto.page == 0" class="btn btn-icon btn-primary" ng-click="gopage()">Go</button>
+
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>

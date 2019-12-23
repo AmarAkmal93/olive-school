@@ -32,10 +32,10 @@
         <thead>
         <tr class="sortable ">
             <th style="width: 3%;"></th>
-            <th st-sort="date_report" style="width: 27%;">Date Report</th>
-            <th st-sort="no_rujukan" style="width: 15%;">Reference No</th>
-            <th st-sort="category" style="width: 30%;">Category</th>
-            <th st-sort="status" style="width: 15%;">Status</th>
+            <th st-sort="date_report" style="width: 27%;">Student Name</th>
+            <th st-sort="no_rujukan" style="width: 15%;">IC Student</th>
+            <th st-sort="category" style="width: 30%;">Year</th>
+            <th st-sort="status" style="width: 15%;">Intake</th>
             <th style="width: 10%;text-align: center">Action</th>
 
 
@@ -51,43 +51,29 @@
             </th>
 
             <th>
-                <input readonly placeholder="Choose Date"
-
-                       class="form-control"
-                       type="text" id="date_report"
-                       name="date_report"
-                       data-ng-model="formData.date_report" onkeydown="getfilter()" ng-enter="getfilter()"
-                       dateselecter/>
-            </th>
-            <th><input ng-enter="getfilter()" ng-model="formData.no_rujukan" placeholder="Search Category"
+                <input ng-enter="getfilter()" ng-model="student_name" placeholder="Search Name"
                        class="input-sm form-control search-input"
-                       type="search"/></th>
-            <!--            <th><input ng-enter="getfilter()" ng-model="formData.category" placeholder="Search Category"-->
-            <!--                       class="input-sm form-control search-input"-->
-            <!--                       type="search"/></th>-->
-            <th>
-                <ui-select ng-model="category.selected"
-                           class="btn-group bootstrap-select form-control" append-to-body="true"
-                           search-enabled="true" ng-change="getfilter()">
-                    <ui-select-match placeholder="Please Choose">
-                        <span> {{$select.selected}}</span>
-                    </ui-select-match>
-                    <ui-select-choices
-                            repeat="x in category.options | filter: $select.search"
-                            ng-hide="!$select.open">
-                        <span ng-bind-html="x"></span>
-                    </ui-select-choices>
-                </ui-select>
+                       type="search"/>
             </th>
             <th>
-                <ui-select ng-model="select_status.selected"
+                <input ng-enter="getfilter()" ng-model="ic_student" placeholder="Search IC"
+                       class="input-sm form-control search-input"
+                       type="search"/>
+            </th>
+            <th>
+                <input ng-enter="getfilter()" ng-model="year" placeholder="Search Year"
+                       class="input-sm form-control search-input"
+                       type="search"/>
+            </th>
+            <th>
+                <ui-select ng-model="select_intake.selected"
                            class="btn-group bootstrap-select form-control" append-to-body="true"
                            search-enabled="false" ng-change="getfilter()">
                     <ui-select-match placeholder="Please Choose">
                         <span> {{$select.selected}}</span>
                     </ui-select-match>
                     <ui-select-choices
-                            repeat="x in select_status.options | filter: $select.search"
+                            repeat="x in select_intake.options | filter: $select.search"
                             ng-hide="!$select.open">
                         <span ng-bind-html="x"></span>
                     </ui-select-choices>
