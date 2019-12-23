@@ -1,0 +1,554 @@
+<style>
+    .blink {
+        animation: blinker 0.6s linear infinite;
+        /*color: #1c87c9;*/
+        /*font-size: 30px;*/
+        font-weight: bold;
+        font-family: sans-serif;
+    }
+
+    .blink-two {
+        animation: blinker-two 1.4s linear infinite;
+    }
+
+    @keyframes blinker-two {
+        100% {
+            opacity: 0;
+        }
+    }
+
+
+    .amar {
+        color: #29bf1c;
+    }
+
+    .ng-hide.ng-hide-animate {
+        display: none !important;
+    }
+
+    .tab-content .tab-pane p {
+        color: #252525;
+    }
+
+    .clearfix {
+        overflow: auto;
+    }
+
+    /*.dropzone {*/
+    /*    position: relative;*/
+    /*    height: 200px;*/
+    /*    border: 2px dashed #b3b3b3;*/
+    /*    border-radius: 4px;*/
+    /*    background-color: #f3f3f3;*/
+    /*    -webkit-box-sizing: border-box;*/
+    /*    -moz-box-sizing: border-box;*/
+    /*    box-sizing: border-box;*/
+    /*}*/
+
+    /*.dropzone .msg {*/
+    /*    font-size: 20px;*/
+    /*    font-weight: bold;*/
+    /*    color: #c3c3c3;*/
+    /*    padding: 0 10px;*/
+    /*}*/
+
+    /*input.fileUpload {*/
+    /*    display: none;*/
+    /*}*/
+
+    .preview {
+        margin: 10px 0;
+        padding: 5px;
+    }
+
+    .previewData img {
+        width: 100px;
+        height: 100px;
+        float: left;
+        margin: 5px;
+    }
+
+    .previewData video {
+        width: 100px;
+        height: 100px;
+        float: left;
+        margin: 5px;
+    }
+
+    .previewDetails {
+        display: inline-block;
+        float: left;
+        margin: 5px;
+        padding: 8px;
+    }
+
+    .detail {
+        font-family: arial;
+        padding: 5px;
+        overflow: hidden;
+        max-width: 250px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .previewControls {
+        display: inline-block;
+        float: left;
+        margin: 40px 30px;
+    }
+
+    .circle {
+        border: 2px solid #ac1f1f;
+        border-radius: 20px;
+        display: inline-block;
+        height: 25px;
+        width: 25px;
+        margin: 5px;
+        cursor: pointer;
+        color: #ff1c1f;
+    }
+
+    .circle.upload:hover {
+        border: 2px solid green;
+    }
+
+    .circle.upload:hover i.fa-check {
+        color: green;
+    }
+
+    .circle.remove:hover {
+        border: 2px solid red;
+    }
+
+    .circle.remove:hover i.fa-close {
+        color: #ff1c1f;
+    }
+
+    .circle i {
+        position: relative;
+        font-size: 14px;
+    }
+
+    .circle i.fa-check {
+        top: 3px;
+        left: 5px;
+    }
+
+    .circle i.fa-close {
+        top: 2px;
+        left: 5px;
+    }
+
+</style>
+<div class="panel panel-blur">
+
+    <div class="panel-heading">
+        <button type="button" class="close" ng-click="close_tab()" aria-label="Close">
+            <em class="ion-ios-close-empty sn-link-close"></em>
+        </button>
+    </div>
+
+    <div class="panel-body">
+        <uib-tabset active="activeTab">
+
+
+            <uib-tab index="1" heading="Report">
+                <form>
+                    <div class="form-group col-sm-12">
+                        <label>Reference No</label>
+                        <input type="text" class="form-control" id="name"
+                               ng-model="no_rujukan" readonly>
+                    </div>
+
+                    <div class="form-group col-sm-12">
+                        <label>Category</label>
+                        <input type="text" class="form-control" id="category"
+                               ng-model="category" readonly>
+                    </div>
+
+                    <div class="form-group col-sm-12">
+                        <label>Date Report</label>
+                        <input type="text" class="form-control" id="tarikh"
+                               ng-model="tarikh" readonly>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label>Location</label>
+                        <input type="text" class="form-control" id="lokasi"
+                               ng-model="lokasi" readonly>
+                    </div>
+                    <!--                    <div class="form-group col-sm-12">-->
+                    <div class="form-group col-sm-10 ">
+                        <!--                        <div class="col-sm-8">-->
+                        <label>Lat Long</label>
+                        <input type="text" class="form-control" id="latlong"
+                               ng-model="latlong" readonly>
+
+
+                    </div>
+                    <div class="form-group col-sm-2" style="padding-top: 22px;padding-left: 0px;">
+                        <!--                        <div class="col-sm-8">-->
+                        <!--                        <label></label>-->
+                        <button style="width: 120px ;" type="button"
+                                class=" btn btn-primary ion-android-map"
+                                ng-click="open_map_view()">
+                            &nbsp;&nbsp;&nbsp;View Map
+                        </button>
+
+
+                    </div>
+                    <!--                    </div>-->
+
+                    <div class="form-group col-sm-12">
+                        <label>Description</label>
+                        <pre>{{desc}}</pre>
+                        <!--                        <summernote config="setting1" id="desc_report" ng-model="desc"-->
+                        <!--                                    style="color: #000000!important;" readonly></summernote>-->
+
+
+                    </div>
+
+                    <div class="col-sm-12">
+                        <label>Attachments</label>
+                        <hr>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <div ng-repeat="x in report_attachment" class="col-sm-6">
+                            <div uib-tooltip="{{x.filename}}" class="col-sm-12" style="text-align: left">
+                                <div class="row">
+                                    <div class="userpic col-sm-3" style="width: 100px;height: 100px;padding-left: 0px;">
+                                        <div class="userpic-wrapper " style="width: 98px;height: 98px;">
+                                            <!--                                <img ng-show="x.type == 'image'" style="width: 60px"-->
+                                            <img ng-show="x.type == 'image'" style=""
+                                                 ng-src="{{ip_server_file}}{{x.id}}/1"
+                                                 onerror="this.src='../static/assets/img/no-image.jpg'">
+
+                                            <img ng-show="x.type == 'excel'" ng-src='../static/assets/img/excel.gif'
+                                                 style=""
+                                                 onerror="this.src='../static/assets/img/excel.gif'">
+
+                                            <img ng-show="x.type == 'doc'" ng-src='../static/assets/img/doc.png'
+                                                 style=""
+                                                 onerror="this.src='../static/assets/img/doc.png'">
+
+                                            <img ng-show="x.type == 'txt'" ng-src='../static/assets/img/txt.png'
+                                                 style=""
+                                                 onerror="this.src='../static/assets/img/txt.png'">
+
+                                            <img ng-show="x.type == 'pdf'" ng-src='../static/assets/img/pdf.png'
+                                                 style=""
+                                                 onerror="this.src='../static/assets/img/pdf.png'">
+
+                                            <img ng-show="x.type == 'vid'" ng-src='../static/assets/img/video.jpg'
+                                                 style=""
+                                                 onerror="this.src='../static/assets/img/video.jpg'">
+                                        </div>
+                                        <!--                                        <div class="col-sm-8">-->
+                                        <!--                                            -->
+                                        <!--                                        </div>-->
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <span ng-show="work_attachment.length"></span>
+                                        <span>
+                                                <div style="overflow-wrap: break-word;"><b
+                                                        style="color:#ffffff;">Name: </b>{{x.filename}}</div>
+                                             </span>
+                                        <a class="btn btn-primary btn-xs " target="_blank"
+                                           href="{{ip_server_file}}{{x.id}}/1">View</a>&nbsp;|
+                                        <a class="btn btn-primary btn-xs " href="{{ip_server_file_download}}{{x.id}}/1"
+                                        >Download</a>&nbsp;
+                                    </div>
+                                </div>
+                                <p></p>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <hr>
+                        </div>
+                    </div>
+
+                    <div style="float: right">
+
+                        <button style="width: 120px ;" type="button"
+                                class="btn btn-danger ion-android-close"
+                                ng-click="close_tab()">
+                            &nbsp;&nbsp;&nbsp;Close
+                        </button>
+                    </div>
+                </form>
+            </uib-tab>
+
+            <uib-tab index="2" ng-show="showtab_work_report == true" heading="Work Report">
+                <form ng-submit="submit()" class="form-horizontal">
+                    <div class="form-group">
+                        <label>Description</label>
+                        <!--   <pre>{{formData.desc}}</pre>-->
+                        <summernote config="setting2" id="summernote" ng-model="formData.desc"
+                                    style="color: #000000!important;" readonly></summernote>
+                        <!--                        <textarea ng-model="formData.desc"  style="color: #000000!important;" ></textarea>-->
+
+
+                    </div>
+
+                    <div ng-hide="show_button_submit == false" class="form-group">
+                        <label>Upload File {{previewData.length}}</label>
+                        <input class="fileUpload" ng-file-model="formData.attachment"
+                               accept="{{format_file}}" type="file" multiple/>
+                        <div class="preview clearfix">
+                            <div class="previewData clearfix" ng-repeat="data in previewData track by $index">
+                                <img ng-src={{data.src}}>
+                                <div class="previewDetails col-sm-5">
+                                    <div class="detail"><b>Name : </b>{{data.name}}</div>
+                                    <div class="detail"><b>Type : </b>{{data.type}}</div>
+                                    <div class="detail"><b>Size : </b> {{data.size}}</div>
+                                </div>
+                                <div class="previewControls col-sm-3">
+                                <span ng-click="remove(data)"
+                                      class="circle remove"><i
+                                        class="fa fa-close"></i>
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-show="work_attachment.length" class="form-group">
+
+                        <div class="col-sm-12">
+                            <label>Attachments</label>
+                            <hr>
+                        </div>
+                        <!--                    <label>Attachments</label>-->
+                        <!--                        <div  align="center"><label direction="right">Attachment list is-->
+                        <!--                            empty...</label></div>-->
+                        <div ng-repeat="x in work_attachment" class="col-sm-6">
+
+
+                            <!--            <div>-->
+
+                            <!--                             <div uib-tooltip="{{x.filename}}" class="col-sm-12"-->
+                            <!--                             style="padding-left: initial;text-align: left;">-->
+                            <div uib-tooltip="{{x.filename}}" class="col-sm-12" style="text-align: left">
+                                <div class="row">
+                                    <div class="userpic col-sm-3" style="width: 100px;height: 100px;padding-left: 0px;">
+                                        <div class="userpic-wrapper " style="width: 98px;height: 98px;">
+                                            <!--                                <img ng-show="x.type == 'image'" style="width: 60px"-->
+                                            <img ng-show="x.type == 'image'" style=""
+                                                 ng-src="{{ip_server_file}}{{x.id}}/2"
+                                                 onerror="this.src='../static/assets/img/no-image.jpg'">
+
+                                            <img ng-show="x.type == 'excel'" ng-src='../static/assets/img/excel.gif'
+                                                 style=""
+                                                 onerror="this.src='../static/assets/img/excel.gif'">
+
+                                            <img ng-show="x.type == 'doc'" ng-src='../static/assets/img/doc.png'
+                                                 style=""
+                                                 onerror="this.src='../static/assets/img/doc.png'">
+
+                                            <img ng-show="x.type == 'txt'" ng-src='../static/assets/img/txt.png'
+                                                 style=""
+                                                 onerror="this.src='../static/assets/img/txt.png'">
+
+                                            <img ng-show="x.type == 'pdf'" ng-src='../static/assets/img/pdf.png'
+                                                 style=""
+                                                 onerror="this.src='../static/assets/img/pdf.png'">
+
+                                            <img ng-show="x.type == 'vid'" ng-src='../static/assets/img/video.jpg'
+                                                 style=""
+                                                 onerror="this.src='../static/assets/img/video.jpg'">
+                                        </div>
+                                        <!--                                        <div class="col-sm-8">-->
+                                        <!--                                            -->
+                                        <!--                                        </div>-->
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <span ng-show="work_attachment.length"></span>
+                                        <span>
+                                                <div style="overflow-wrap: break-word;"><b
+                                                        style="color:#ffffff;">Name: </b>{{x.filename}}</div>
+                                             </span>
+                                        <a class="btn btn-primary btn-xs " target="_blank"
+                                           href="{{ip_server_file}}{{x.id}}/2">View</a>&nbsp;|
+                                        <a class="btn btn-primary btn-xs " href="{{ip_server_file_download}}{{x.id}}/2"
+                                        >Download</a>&nbsp;
+                                    </div>
+
+                                </div>
+                                <p></p>
+
+                                <!--                                <div style="border: black;height: 200px;width: 200px">-->
+                                <!--                                    <img ng-show="x.type == 'image'"-->
+                                <!--                                         ng-src="{{ip_server_file}}{{x.id}}/2"-->
+                                <!--                                         onerror="this.src='../static/assets/img/no-image.jpg'">-->
+
+                                <!--                                    <img ng-show="x.type == 'excel'" ng-src='../static/assets/img/excel.gif'-->
+                                <!--                                         style="width: 60px"-->
+                                <!--                                         onerror="this.src='../static/assets/img/excel.gif'">-->
+
+                                <!--                                    <img ng-show="x.type == 'doc'" ng-src='../static/assets/img/doc.png'-->
+                                <!--                                         style="width: 60px"-->
+                                <!--                                         onerror="this.src='../static/assets/img/doc.png'">-->
+
+                                <!--                                    <img ng-show="x.type == 'txt'" ng-src='../static/assets/img/txt.png'-->
+                                <!--                                         style="width: 60px"-->
+                                <!--                                         onerror="this.src='../static/assets/img/txt.png'">-->
+
+                                <!--                                    <img ng-show="x.type == 'pdf'" ng-src='../static/assets/img/pdf.png'-->
+                                <!--                                         style="width: 60px"-->
+                                <!--                                         onerror="this.src='../static/assets/img/pdf.png'">-->
+
+                                <!--                                    <img ng-show="x.type == 'vid'" ng-src='../static/assets/img/video.jpg'-->
+                                <!--                                         style="width: 60px"-->
+                                <!--                                         onerror="this.src='../static/assets/img/video.jpg'">-->
+                                <!--                                </div>-->
+
+
+                                <!--                                &lt;!&ndash;                            <video ng-show="x.type == 'vid'" width="100%" height="100%" style="height: 100px;" controls>&ndash;&gt;-->
+                                <!--                                &lt;!&ndash;                                <source src="{{ip_server_file}}{{x.id}}" >&ndash;&gt;-->
+
+                                <!--                                &lt;!&ndash;                            </video>&ndash;&gt;-->
+
+                                <!--                                <span ng-show="work_attachment.length"></span>-->
+                                <!--                                <span>-->
+                                <!--                                <a class="btn btn-primary btn-xs " target="_blank"-->
+                                <!--                                   href="{{ip_server_file}}{{x.id}}/2">View</a>&nbsp;|-->
+                                <!--                                <a class="btn btn-primary btn-xs " href="{{ip_server_file_download}}{{x.id}}/2"-->
+                                <!--                                >Download</a>&nbsp;|-->
+                                <!--                                <a class="btn btn-warning btn-xs " ng-click="deleteFile(x.id)">Delete</a>-->
+                                <!--                                    &lt;!&ndash;                                 <a >{{x.filename}}</a>&ndash;&gt;-->
+                                <!--                                  <div><b style="color:#ffffff;">Name: </b>{{x.filename}}</div>-->
+                                <!--                             </span>-->
+
+                            </div>
+                            <!--                        <div class="col-sm-12">-->
+                            <!--                            <div>-->
+                            <!--                        <div><b style="color:#ffffff;">Name: </b>{{x.filename}}</div>-->
+                            <!--                            </div>-->
+
+                            <!--                        </div>-->
+
+                        </div>
+                        <div class="col-sm-12">
+                            <hr>
+                        </div>
+                    </div>
+
+                    <div style="float: right">
+                        <button ng-hide="show_button_submit == false" style="width: 120px ;" type="submit"
+                                class="btn btn-success ion-android-cloud">
+                            &nbsp;&nbsp;&nbsp;Submit
+                        </button>&nbsp;&nbsp;
+                        <button style="width: 120px ;" type="button"
+                                class="btn btn-danger ion-android-close"
+                                ng-click="close_tab()">
+                            &nbsp;&nbsp;&nbsp;Close
+                        </button>
+                    </div>
+
+                </form>
+            </uib-tab>
+            <uib-tab index="3" heading="History" ng-click="reload_history()">
+                <div class="col-sm-12">
+                    <hr>
+                </div>
+                <div class="col-sm-12">
+                    <section id="cd-timeline" class="cd-container cssanimations">
+                        <div ng-repeat="item in history" class="cd-timeline-block">
+                            <div class="cd-timeline-img">
+                                <div class="kameleon-icon with-round-bg {{item.color}}"><img
+                                        ng-src="{{::( item.status | kameleonImg )}}"></div>
+                                <!--                                        ng-src="{{::( 'Checklist' | kameleonImg )}}"></div>-->
+                                <!--                                        ng-src="{{::( 'Clipboard-Plan' | kameleonImg )}}"></div>-->
+                            </div>
+
+                            <div ng-show="show_blinking == true" class="cd-timeline-content {{item.color}}">
+                                <h5 class="blink blink-two" ng-show=" history[history.length - 1] == item"
+                                    style="color:  #ffee10;">NOW</h5>
+                                <h5>{{item.status}}</h5>
+
+                                <p ng-bind-html="convertHTML(item.desc)"></p>
+                                <span ng-show="history[history.length - 1] == item" style="color: #ffee10;"
+                                      class=" blink blink-two cd-date">{{item.date}}</span>
+                                <span ng-hide="history[history.length - 1] == item" class="cd-date">{{item.date}}</span>
+                                <!--                                <span ng-hide="history[$scope.history.length - 1] == item" class="cd-date">{{item.date}}</span>-->
+                            </div>
+                            <div ng-show="show_blinking == false" class="cd-timeline-content {{item.color}}">
+                                <h5>{{item.status}}</h5>
+                                <h5 ng-show=" history[history.length - 1] == item"
+                                    style="color: #15ff00;">Report Closed</h5>
+
+
+                                <p ng-bind-html="convertHTML(item.desc)"></p>
+                                <span ng-show="history[history.length - 1] == item" style="color:  #16ff00;"
+                                      class="cd-date">{{item.date}}</span>
+                                <span ng-hide="history[history.length - 1] == item" class="cd-date">{{item.date}}</span>
+                                <!--                                <span ng-hide="history[$scope.history.length - 1] == item" class="cd-date">{{item.date}}</span>-->
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-sm-12">
+                    <hr>
+                </div>
+                <div style=" float: right">
+
+                    <button style="width: 120px ;" type="button"
+                            class="btn btn-danger ion-android-close"
+                            ng-click="close_tab()">
+                        &nbsp;&nbsp;&nbsp;Close
+                    </button>
+                </div>
+
+
+            </uib-tab>
+            <div ng-show="show_status_button == true">
+                <div ng-show="status_loading == false" style="padding-top: 3px;float: right;" class="btn-group"
+                     uib-dropdown
+                     append-to-body="true">
+                    <!--                    <button type="button" class="btn btn-default">Status</button>-->
+                    <button type="button" class="btn btn-default " uib-dropdown-toggle>Status
+                        <!--                        <span class="caret"></span>-->
+                        <!--                        <span class="sr-only">Toggle Dropdown</span>-->
+                    </button>
+
+                    <button type="button" class="btn btn-default " uib-dropdown-toggle>
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+
+                    <ul uib-dropdown-menu>
+                        <li ng-click="status_selection(x)" ng-repeat="x in list_status"><a ng-show="status != x.name"
+                                                                                           ng-hide="x.name == 'Return'"
+                                                                                           href>{{x.name}}</a>
+                        </li>
+                        <li role="separator"
+                            class="divider"></li>
+                        <li ng-click="status_selection(x)" ng-repeat="x in list_status"><a ng-show="x.name == 'Return'"
+                                                                                           href>{{x.name}}</a></li>
+
+                    </ul>
+                </div>
+
+                <div ng-show="status_loading == true" style="padding-top: 3px;float: right;">
+                    <button class=" btn btn-icon btn-default">
+                        <i class="fa fa-spinner fa-spin"></i>
+                    </button>
+                </div>
+            </div>
+
+
+        </uib-tabset>
+        <!--        <div class="table table-striped" style="padding-top: 10px;padding-left: 30px;">-->
+
+        <!--            <button ng-hide="hide_forward == true" style="width: 120px ;float: right" type="button"-->
+        <!--                    class="btn btn-success ion-forward"-->
+        <!--                    data-toggle="modal"-->
+        <!--                    ng-click="forward()">-->
+        <!--                &nbsp;&nbsp;&nbsp;Forward-->
+        <!--            </button>-->
+
+        <!--        </div>-->
+    </div>
+
+
+</div>
+

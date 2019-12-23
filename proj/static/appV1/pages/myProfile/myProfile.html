@@ -1,0 +1,125 @@
+<div ba-panel ba-panel-class="profile-page">
+    <form ng-controller="myProfilePageCtrl" name="form"
+          ng-submit="!form.$pending && form.$valid ;updateProfile();$close()" class="form-horizontal">
+        <div class="panel-content">
+            <h3 class="with-line">General Information</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row clearfix">
+                        <label class="col-sm-3 control-label">Picture</label>
+                        <div class="col-sm-9">
+                            <div class="userpic">
+                                <div class="userpic-wrapper">
+                                    <img ng-src="{{ picture }}"
+                                         onerror="this.src='../static/assets/img/theme/no-photo.png'"
+                                         ng-click="uploadPicture()">
+                                </div>
+                                <i ng-if="!noPicture"></i>
+                                <a href class="change-userpic" ng-click="uploadPicture()">Profile Picture</a>
+                                <input type="file" ng-show="false" id="uploadFile"
+                                       ng-file-select="onFileSelect($files)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6"></div>
+            </div>
+            <h3 class="with-line">User Account</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row clearfix" ng-class="{ 'has-error': form.email.$invalid }">
+                        <label class="col-sm-3 control-label">User ID</label>
+
+                        <div class="col-sm-9">
+                            <input type="email" class="form-control" ng-model="email" name="email" disabled/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row clearfix">
+                        <label class="col-sm-3 control-label">Password</label>
+                        <div class="col-sm-9">
+                            <input type="password" name="password" class="form-control" ng-model="password"
+                                   ng-minlength="6" placeholder="******"/>
+                            <span style="color:#ff3647" ng-show="form.password.$dirty && form.$error.minlength">Too Short!</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row clearfix" ng-class="{ 'has-error': form.passwordConfirmation.$invalid }">
+                        <label class="col-sm-3 control-label">Re-type Password</label>
+                        <div class="col-sm-9">
+                            <input type="password" name="passwordConfirmation" class="form-control"
+                                   ng-model="passwordConfirmation" password-confirm match-target="password"
+                                   placeholder="******"/>
+                            <span style="color:#ff3647" class="help-block"
+                                  ng-show="form.passwordConfirmation.$error.match">Passwords do not match.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h3 class="with-line"></h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row clearfix">
+                        <label class="col-sm-3 control-label">Staff ID</label>
+
+                        <div class="col-sm-9">
+                            <input disabled name="staff_id" type="text" class="form-control" ng-model="staff_id"
+                                   required/>
+                        </div>
+                    </div>
+                    <div class="form-group row clearfix">
+                        <label class="col-sm-3 control-label">Name</label>
+                        <div class="col-sm-9" id="name">
+                            <input name="name" type="text" class="form-control" ng-model="name" disabled/>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h3 class="with-line">Contact Information</h3>
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div class="form-group row clearfix" ng-class="{ 'has-error': form.phone.$invalid }">
+                        <label class="col-sm-3 control-label">Phone</label>
+                        <div class="col-sm-9" id="userphone">
+                            <input pattern="\d+" edit-phone-not-use name="phone" type="text" min="7"
+                                   maxlength="11"
+                                   class="form-control"
+                                   ng-model="phone" required/>
+                            <span style="color:#ff3647" class="help-block">{{edituserphonexist}}</span>
+                            <span style="color:#ff3647" ng-show="form.phone.$dirty && form.phone.$error">
+                           <span style="color:#ff3647" class="help-block" ng-show="form.phone.$error.pattern">Invalid No.</span>
+                            <span style="color:#ff3647" class="help-block" ng-show="form.phone.$error.required">Phone No. is required.</span>
+                                <!---llll-->
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row clearfix">
+                        <div class="col-sm-9 form-group">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="with-line"></h3>
+            <div style="text-align: right;">
+
+                <button ng-disabled="form.$invalid" style="width: 150px;margin: 23px 0px 12px 5px;" type="submit"
+                        class="btn btn-primary btn-with-icon save-profile">
+                    <i class="ion-android-upload"></i>Update
+                </button>
+                <button ng-hide="isValid" type="button" style="width: 150px;margin: 23px 0px 12px 5px;"
+                        ui-sref="management_user" class="btn btn-danger btn-with-icon save-profile">
+                    <i class="ion-android-close"></i>Cancel
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

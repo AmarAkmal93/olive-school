@@ -1,0 +1,23 @@
+<div class="page-top clearfix" scroll-position="scrolled" max-height="50" ng-class="{'scrolled': scrolled}">
+    <a href="#" class="al-logo clearfix"><span>e</span>Aduan</a>
+    <a href class="collapse-menu-link ion-navicon" ba-sidebar-toggle-menu></a>
+
+
+    <div class="user-profile clearfix">
+        <div class="al-user-profile" uib-dropdown>
+            <a uib-dropdown-toggle class="profile-toggle-link">
+                <!--        <img ng-src="{{profileImg}}" onerror="this.src='../static/assets/img/theme/no-photo.png'" alt="Profile" style="line-height: 45px" >-->
+                <img ng-src="{{profileImg}}" onerror="this.src='../static/assets/img/theme/no-photo.png'" alt="Profile"
+                     style="line-height: 45px">
+            </a>
+            <ul class="top-dropdown-menu profile-dropdown" uib-dropdown-menu>
+                <li><i class="dropdown-arr"></i></li>
+                <li><a ui-sref="myProfile"><i class="fa fa-user"></i>Profile</a></li>
+                <!--        <li><a href="../login/logout?id={{getGlobalId}}" class="signout"><i class="fa fa-power-off"></i>Sign out</a></li>-->
+                <li><a href="https://myhardrockbit.asuscomm.com/agency/main/#/report/list" class="signout"><i
+                        class="fa fa-power-off"></i>Sign out</a></li>
+            </ul>
+        </div>
+        <msg-center></msg-center>
+    </div>
+</div>

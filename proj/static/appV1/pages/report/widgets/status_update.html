@@ -1,0 +1,59 @@
+<div class="panel panel-blur">
+    <div class="panel-heading">
+        <button type="button" class="close" ng-click="$dismiss()" aria-label="Close">
+            <em class="ion-ios-close-empty sn-link-close"></em>
+        </button>
+        <h3 class="panel-title">Update Status</h3>
+    </div>
+    <div class="panel-body">
+        <form name="form" ng-submit="!form.$pending && form.$valid ;confirm('update')" class="form-horizontal">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Status Selection :</label>
+                    <div class="col-sm-9">
+                        <!--     <label>Description</label>-->
+                        <input type="text" class="form-control" id="latlong"
+                               ng-model="formData.status.name" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Remark :</label>
+                    <div class="col-sm-9" ng-class="{ 'has-error': form.desc.$invalid }">
+                        <!--     <label>Description</label>-->
+                        <summernote config="snotestatusconfig" id="desc" ng-model="formData.desc"
+                                    style="color: #000000!important;" required name="desc"></summernote>
+                        <span style="color:#ff3647" class="help-block" ng-show="form.desc.$error.required">Remark is required !</span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <!--                <button ng-disabled="!name.selected || !content" type="submit"-->
+                <!--                        class="btn btn-primary fa fa-cloud-upload"-->
+                <!--                        style="width: 150px;height: 33.07px;">Submit-->
+                <!--                </button>-->
+
+                <button type="submit"
+                        class="btn btn-primary fa fa-cloud-upload"
+                        style="width: 120px">&nbsp;&nbsp;&nbsp;&nbsp;Update
+                </button>
+                <button style="width: 120px" type="button"
+                        class="btn btn-danger ion-android-close"
+                        ng-click="$close()">
+                    &nbsp;&nbsp;&nbsp;Close
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<!--<script>-->
+<!--    $(function () {-->
+<!--        $("input[name=title]")[0].oninput = function () {-->
+<!--            if ($(this).val().length > 30) {-->
+<!--                this.setCustomValidity("Character length more than  100");-->
+<!--            }-->
+
+<!--        };-->
+
+<!--    });-->
+<!--</script>-->

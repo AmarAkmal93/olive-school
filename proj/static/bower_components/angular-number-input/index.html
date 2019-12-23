@@ -1,0 +1,50 @@
+<html ng-app="number-input-demo">
+    <head>
+		<!-- Bootstrap 3.3.5 -->
+		<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="lib/bootstrap/css/bootstrap-theme.min.css">
+
+		<link rel="stylesheet" href="index.css">
+
+        <title>Angular | Number Input</title>
+    </head>
+    <body ng-controller="AppController as appCtrl">
+    	<div class="page-header text-center">
+		  	<h1>Number Input for AngularJS</h1>
+            <h5>
+                <a href="https://raw.githubusercontent.com/cohenadair/angular.number-input/master/dist/number-input.min.js" download="number-input.min.js">Download number-input.min.js</a> or <a href="https://github.com/cohenadair/angular.number-input">View on GitHub</a>
+            </h5>
+		</div>
+
+        <div class="row col-md-12 change-count">Custom ng-change function has been called <b>{{appCtrl.onChangeCount}}</b> times</div>
+
+        <div class="row" ng-repeat="row in appCtrl.inputsConfig">
+            <div ng-repeat="input in row">
+                <div class="col-md-6">
+                    <div class="label-container">
+                        <label>{{input.label}}:</label>
+                        <small class="model-label">model value is {{input.model}}</small>
+                    </div>
+                    <number-input ng-model="input.model" ng-change="appCtrl.onChange(input.model)" options="input.options"></number-input>
+                </div>
+            </div>
+        </div>
+
+        <h4 class="text-center enjoy">Enjoy!</h4>    
+
+        <!-- jQuery 1.11.3 -->
+        <script src="lib/jquery/jquery.min.js"></script>
+
+        <!-- Bootstrap 3.3.5 -->
+		<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+
+		<!-- AngularJS 1.4.1 -->
+		<script src="lib/angular/angular.min.js"></script>
+
+		<!-- Number Input -->
+		<script src="dist/number-input.min.js"></script>
+        <!-- <script src="src/number-input.js"></script> -->
+
+		<script src="app.js"></script>
+    </body>
+</html>
